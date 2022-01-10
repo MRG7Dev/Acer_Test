@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Acer_Test.Models.Employee>
+
+@{
+    ViewBag.Title = "Employee_List";
+}
+
+<h2>Employee_List</h2>
+<div id="message">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert @TempData["Messageclass"].ToString() alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["Message"].ToString()
+        </div>
+    }
+</div>
+
+<p>
+    @Html.ActionLink("Create New", "Emp_Register")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Emp_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MOBILE_NO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMAIL_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CITY)
+        </th>
+        <th>
+
+            ACTION
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Emp_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MOBILE_NO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMAIL_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PAN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CITY)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Emp_Id }) |
+                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Emp_Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@*<script type="text/javascript">
+
+   $(document).ready(function(){
+   	$('[name=view]').click(function(){
+   		var valueis = $(this).attr('onclick');
+   		alert(valueis);
+   	});
+   });
+
+
+</script>*@

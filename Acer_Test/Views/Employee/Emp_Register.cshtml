@@ -1,0 +1,227 @@
+﻿@model Acer_Test.Models.Employee
+
+@{
+    ViewBag.Title = "Employee Register";
+}
+
+<h2>Employee Register</h2>
+<head>
+
+    @*<script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>*@
+
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () { //1
+            alert("ready!");
+
+            $("#DDSTATE").change(function () { //2
+
+                alert("state selected");
+                var ac = $('#DDSTATE').val();
+                alert(ac)
+                debugger
+
+
+                $.ajax({ 
+
+                    url: "/Employee/City_Bind",
+                    data: { state: ac }, // { state: ac ,stateId: id},
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) { 
+                        debugger
+
+                        $("#DDCITY").empty()
+                        $("#DDCITY").append("<Option value=''>---Select City---</Option>")
+                        if (data.length > 0) { 
+
+                            $.each(data, function (i) { 
+                                var optionhtml = '<option value="' + data[i].ID + '">' + data[i].CITY + '</option>';
+                                $("#DDCITY").append(optionhtml);
+                            });
+                        }
+                        $("#DDCITY").trigger("chosen:updated");
+
+
+                    },
+                    error:
+                        function (response) {
+                            alert("ERROR");
+                            alert("Error " );
+                        }
+
+                });
+
+                //$.ajax({
+                //    type: "GET",
+                //    URL: "/EMPLOYEE/City_Bind",
+                //    dataType: "json",
+                //    contentType: "application/json",
+                //    data: JSON.stringify({ EmpDet: EmpModel }),
+                //    error: function (response) {
+                //        alert(response.responseText);
+
+                //    },
+                //    //After successfully inserting records  
+                //    success: function (response) {
+
+                //        //Reload Partial view to fetch latest added records  
+                //        $('#DivEmpList').load("/Home/EmployeeDetails");
+                //        alert(response);
+
+                //    }
+                //});
+
+
+            
+
+
+            });//2
+
+            alert("AFTER JQUERY");
+            $("#DDCITY").click(function () {
+
+                alert("city clicked");
+
+            });
+
+        });//1
+
+    </script>
+
+    @*<script>
+        $("#DDCITY").click(function () {
+
+            alert("city clicked");
+
+        });
+
+    </script>*@
+
+
+
+
+</head>
+
+<div id="message">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert @TempData["Messageclass"].ToString() alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["Message"].ToString()
+        </div>
+    }
+</div>
+
+
+@using (Html.BeginForm("Emp_Register", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @*<h4>Employee</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Emp_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Emp_Id, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.HiddenFor(model => model.Emp_Id, new { htmlAttributes = new { @class = "form-control" } })*@
+                @*  @Html.ValidationMessageFor(model => model.Emp_Id, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MOBILE_NO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MOBILE_NO, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MOBILE_NO, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EMAIL_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EMAIL_ID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EMAIL_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PAN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PAN, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PAN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.state, ViewData["country"] as List<SelectListItem>, new { @class = "form-control select-chosen", @id = "DDSTATE" })
+                @*@Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+      <div class="form-group">
+            @Html.LabelFor(model => model.CITY, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CITY, (IEnumerable<SelectListItem>)ViewBag.CITYLIST, new { @class = "form-control select-chosen", @id = "DDCITY" })
+
+                @*@Html.EditorFor(model => model.CITY, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.CITY, "", new { @class = "text-danger" })
+            </div>
+            </div>
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Add" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+
+            <div>
+                @Html.ActionLink("Back to List", "Employee_List")
+            </div>
+
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
